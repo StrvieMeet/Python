@@ -1,4 +1,4 @@
-## 二、while循环
+## while循环
 
 while 循环
 在生活中，我们遇到过循环的事情吧？比如循环听歌。在程序中，也是存才的，这就是流程控制语句 while
@@ -12,7 +12,7 @@ while 条件:
     # 如果条件为假，那么循环不执行
 ```
 
-![](/Users/meet/gitbook/assets/1-1548335570346.gif)
+![](assets/1-1548335570346.gif)
 
 条件如果为真就会一直执行下去  也就人们常说的死循环,我们想要停止就点那个红色的方块,如果点击的x的话,程序并没有停止,还在继续运行着
 
@@ -44,7 +44,7 @@ while True:
 	print(count)
 ```
 
-![](/Users/meet/gitbook/assets/1-1548335627213.gif)
+![](assets/1-1548335627213.gif)
 
 这样下去我就会执行下去,但是我想到100就停了
 
@@ -57,7 +57,7 @@ while count < 100:
 	print(count)
 ```
 
-![](/Users/meet/gitbook/assets/1-1548335696490.gif)
+![](assets/1-1548335696490.gif)
 
 while 关键后边的是条件,这样就可以通过条件成功的控制住循环的次数,我们现在知道通过修改while后边的内容来终止循环,这是咱们自己想的办法,python这个编程语言中是不是应该也得有个终止循环的关键字什么的吧,我们来找一下试试      
 
@@ -74,7 +74,7 @@ while num <6:
     print("end")
 ```
 
-![](/Users/meet/gitbook/assets/1-1548335784656.gif)
+![](assets/1-1548335784656.gif)
 
 当程序执行到break的时候就结束了.break就是结束当前这个while循环的 break以下的代码都不执行
 
@@ -91,7 +91,7 @@ while num <6:
     print("end")
 ```
 
-![](/Users/meet/gitbook/assets/1-1548335881317.gif)
+![](assets/1-1548335881317.gif)
 
 **注意:break是终止循环,continue是跳出本次循环,继续下次循环**
 
@@ -117,7 +117,7 @@ print('不好')
 # 当上边的代码执行到break的时候else缩进后的内容不会执行
 ```
 
-![](/Users/meet/gitbook/assets/1-1548336148264.gif)
+![](assets/1-1548336148264.gif)
 
 这个执行的效果是因为
 
