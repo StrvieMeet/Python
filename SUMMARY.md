@@ -5,7 +5,7 @@
         * [Python简介](01 Python简介.md)
         * [Python安装](02 Python安装.md)
         * [Python入门](03 Python使用.md)
-    * [第二章](02 Python 运算符.md)
+    * [第二章](02 Python运算符.md)
         * [Pycharm使用](Pycharm使用.md)
         * [While 循环](04 while循环.md)
         * [格式化输出](05 格式化输出.md)
