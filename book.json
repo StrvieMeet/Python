@@ -13,42 +13,58 @@
   "links": {
     "sidebar": {
       "我的博客": "https://www.cnblogs.com/guobaoyuan/" 
-    }
-  },
-  "plugins": [ 
-    "-sharing",
-    "splitter",
-    "expandable-chapters-small",
-    "anchors",
+    },         
 
-    "github",
-    "github-buttons",
-    "donate",
-    "sharing-plus",
-    "anchor-navigation-ex",
-    "favicon"
-  ],
+ "sharing": {
+            "all": null,
+            "facebook": null,
+            "google": null,
+            "twitter": null,
+            "weibo": null
+    }
+
+  },
+
+ "pdf": {
+        "fontSize": 18,
+        "footerTemplate": null,
+        "headerTemplate": null,
+        "margin": {
+            "bottom": 36,
+            "left": 62,
+            "right": 62,
+            "top": 36
+        },
+        "pageNumbers": false,
+        "paperSize": "a4"
+    },
   "pluginsConfig": {
     "github": {
       "url": "https://github.com/StrvieMeet"
     },
-    "github-buttons": {
-      "buttons": [{
-        "user": "kuangshp",
-        "repo": "mysql",
-        "type": "star",
-        "size": "small",
-        "count": true
-      }]
     },
     "donate": {
 
 ​      "alipay": "./assets/image-20190625091338584.png",
-​      "WeChat":"./assets/image-20190625091218778.png",
 ​      "title": "",
 ​      "button": "赞赏",
 ​      "alipayText": " "
 ​    },
+
+"plugins": [
+        "advanced-emoji",
+        "toggle-chapters",
+        "theme-comscore",
+        "splitter",
+        "github",
+        "-sharing",
+        "-lunr",
+        "-search",
+        "search-plus",
+        "anchor-navigation-ex@1.0.10",
+        "editlink"
+    ],
+
 ​    "sharing": {
 ​      "douban": false,
 ​      "facebook": false,
@@ -72,6 +88,7 @@
 ​        "qq", "qzone", "linkedin", "pocket"
 ​      ]
 ​    },
+
 ​    "anchor-navigation-ex": {
 ​      "showLevel": false
 ​    },
