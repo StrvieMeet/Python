@@ -1,80 +1,107 @@
+```json
 {
-  "title": "Python学习必备",
-  "author": "Meet",
-  "description": "能够简单,易懂得快速学习",
-  "language": "zh-hans", 
-  "gitbook": "3.2.3", 
-  "styles": {
-    "website": "./styles/website.css" 
-  },
-  "structure": {
-    "readme": "README.md" 
-  },
-  "links": {
-    "sidebar": {
-      "我的博客": "https://www.cnblogs.com/guobaoyuan/" 
+    "title": "Python学习手册",
+    "description": "",
+    "author": "Meet",
+    "output.name": "gitbooks",
+    "language": "zh-hans",
+    "gitbook": "3.2.2",
+    "root": ".",
+    "structure": {
+        "readme": "README.md"
+    },
+    "links": {
+        "sidebar": {
+            "Meet - 博客": "https://www.cnblogs.com/guobaoyuan/"
+        }
+    },
+    "plugins": [
+        "-lunr",
+        "-search",
+        "-highlight",
+        "-livereload",
+        "search-plus@^0.0.11",
+        "github@^2.0.0",
+        "github-buttons@2.1.0",
+        "advanced-emoji@^0.2.1",
+        "anchors@^0.7.1",
+        "emphasize@^1.1.0",
+        "prism@^2.1.0",
+        "prism-themes@^0.0.2",
+        "splitter",
+        "expandable-chapters-small@^0.1.7",
+        "sectionx@^3.1.0",
+        "donate@^1.0.2",
+        "local-video@^1.0.1",
+        "anchor-navigation-ex@0.1.8",
+        "favicon@^0.0.2",
+        "todo@^0.1.3",
+        "3-ba@^0.9.0"
+    ],
+    "pluginsConfig": {
+        "disqus": {
+            "shortName": "gitbookuse"
+        },
+        "prism": {
+            "css": [
+                "prism-themes/themes/prism-base16-ateliersulphurpool.light.css"
+            ]
+        },
+        "github": {
+            "url": "https://github.com/StrvieMeet/"
+        },
+        "github-buttons": {
+            "repo": "StrvieMeet/Python",
+            "types": [
+                "star"
+            ],
+            "size": "small"
+        },
+        "sharing": {
+            "weibo": true,
+            "facebook": true,
+            "twitter": true,
+            "google": false,
+            "instapaper": false,
+            "vk": false,
+            "all": [
+                "facebook",
+                "google",
+                "twitter",
+                "weibo",
+                "instapaper"
+            ]
+        },
+        "3-ba": {
+            "token": "ff100361cdce95dd4c8fb96b4009f7bc"
+        },
+        "donate": {
+            "wechat": "https://github.com/StrvieMeet/Python/blob/master/assets/image-20190625091218778.png",
+            "alipay": "https://github.com/StrvieMeet/Python/blob/master/assets/image-20190625091338584.png",
+            "title": "",
+            "button": "赏",
+            "alipayText": "支付宝打赏",
+            "wechatText": "微信打赏"
+        },
+        "anchor-navigation-ex": {
+            "isRewritePageTitle": false,
+            "tocLevel1Icon": "fa fa-hand-o-right",
+            "tocLevel2Icon": "fa fa-hand-o-right",
+            "tocLevel3Icon": "fa fa-hand-o-right"
+        },
+        "sectionx": {
+            "tag": "b"
+        },
+        "favicon": {
+            "shortcut": "favicon.ico",
+            "bookmark": "favicon.ico"
+        }
     }
-  },
-  "plugins": [ 
-    "-sharing",
-    "splitter",
-    "expandable-chapters-small",
-    "anchors",
-
-    "github",
-    "github-buttons",
-    "donate",
-    "sharing-plus",
-    "anchor-navigation-ex",
-    "favicon"
-  ],
-  "pluginsConfig": {
-    "github": {
-      "url": "https://github.com/StrvieMeet"
-    },
- 
-    "donate": {
-      "alipay": "./assets/assdonate.png",
-      "WeChat":""
-      "title": "",
-      "button": "赞赏",
-      "alipayText": " "
-    },
-    "sharing": {
-      "douban": false,
-      "facebook": false,
-      "google": false,
-      "hatenaBookmark": false,
-      "instapaper": false,
-      "line": false,
-      "linkedin": false,
-      "messenger": false,
-      "pocket": false,
-      "qq": false,
-      "qzone": false,
-      "stumbleupon": false,
-      "twitter": false,
-      "viber": false,
-      "vk": false,
-      "weibo": false,
-      "whatsapp": false,
-      "all": [
-        "google", "facebook", "weibo", "twitter",
-        "qq", "qzone", "linkedin", "pocket"
-      ]
-    },
-    "anchor-navigation-ex": {
-      "showLevel": false
-    },
-    "favicon": {
-      "shortcut": "./source/images/favicon.jpg",
-      "bookmark": "./source/images/favicon.jpg",
-      "appleTouch": "./source/images/apple-touch-icon.jpg",
-      "appleTouchMore": {
-        "120x120": "./source/images/apple-touch-icon.jpg",
-        "180x180": "./source/images/apple-touch-icon.jpg"
-      }
-    }
-  }
-
 }
+```
+
+
+
+![image-20190625190804041](assets/image-20190625190804041.png)
+
+![image-20190625190902858](assets/image-20190625190902858.png)
