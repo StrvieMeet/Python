@@ -76,8 +76,8 @@
             "token": "ff100361cdce95dd4c8fb96b4009f7bc"
         },
         "donate": {
-            "wechat": "https://github.com/StrvieMeet/Python/blob/master/assets/image-20190625091218778.png",
-            "alipay": "https://github.com/StrvieMeet/Python/blob/master/assets/image-20190625091338584.png",
+            "wechat": "/assets/image-20190625190804041.png",
+            "alipay": "/assets/image-20190625190902858.png",
             "title": "",
             "button": "赏",
             "alipayText": "支付宝打赏",
