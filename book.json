@@ -1,103 +1,80 @@
-```python
 {
-    "title": "Python学习必备",
-    "author": "Meet",
-    "description": "能够简单,易懂得快速学习",
-    "language": "zh-hans",
-    "gitbook": "3.2.3",
-    "styles": {
-        "website": "./styles/website.css"
-    },
-    "structure": {
-        "readme": "README.md"
-    },
-    "links": {
-        "sidebar": {
-            "我的博客": "https://www.cnblogs.com/guobaoyuan/"
-        },
+  "title": "Python学习必备",
+  "author": "Meet",
+  "description": "能够简单,易懂得快速学习",
+  "language": "zh-hans", 
+  "gitbook": "3.2.3", 
+  "styles": {
+    "website": "./styles/website.css" 
+  },
+  "structure": {
+    "readme": "README.md" 
+  },
+  "links": {
+    "sidebar": {
+      "我的博客": "https://www.cnblogs.com/guobaoyuan/" 
+    }
+  },
+  "plugins": [ 
+    "-sharing",
+    "splitter",
+    "expandable-chapters-small",
+    "anchors",
 
-        "sharing": {
-            "all": null,
-            "facebook": null,
-            "google": null,
-            "twitter": null,
-            "weibo": null
-        }
-
+    "github",
+    "github-buttons",
+    "donate",
+    "sharing-plus",
+    "anchor-navigation-ex",
+    "favicon"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/StrvieMeet"
     },
-
-    "pdf": {
-        "fontSize": 18,
-        "footerTemplate": null,
-        "headerTemplate": null,
-        "margin": {
-            "bottom": 36,
-            "left": 62,
-            "right": 62,
-            "top": 36
-        },
-        "pageNumbers": false,
-        "paperSize": "a4"
-    },
-    "pluginsConfig": {
-        "github": {
-            "url": "https://github.com/StrvieMeet"
-        },
-    },
+ 
     "donate": {
-        "alipay": "./assets/image-20190625091338584.png",
-        "title": "",
-        "button": "赞赏",
-        "alipayText": " ",
+      "alipay": "./assets/assdonate.png",
+      "WeChat":""
+      "title": "",
+      "button": "赞赏",
+      "alipayText": " "
     },
-
-    "plugins": [
-        "advanced-emoji",
-        "toggle-chapters",
-        "theme-comscore",
-        "splitter",
-        "github",
-        "-sharing",
-        "-lunr",
-        "-search",
-        "search-plus",
-        "anchor-navigation-ex@1.0.10",
-        "editlink"
-    ],
-
     "sharing": {
-    "douban": false,
-    "facebook": false,
-    "google": false,
-    "hatenaBookmark": false,
-    "instapaper": false,
-    "line": false,
-    "linkedin": false,
-    "messenger": false,
-    "pocket": false,
-    "qq": false,
-    "qzone": false,
-    "stumbleupon": false,
-    "twitter": false,
-    "viber": false,
-    "vk": false,
-    "weibo": false,
-    "whatsapp": false,
-    "all": [
-    "google", "facebook", "weibo", "twitter",
-    "qq", "qzone", "linkedin", "pocket"]
+      "douban": false,
+      "facebook": false,
+      "google": false,
+      "hatenaBookmark": false,
+      "instapaper": false,
+      "line": false,
+      "linkedin": false,
+      "messenger": false,
+      "pocket": false,
+      "qq": false,
+      "qzone": false,
+      "stumbleupon": false,
+      "twitter": false,
+      "viber": false,
+      "vk": false,
+      "weibo": false,
+      "whatsapp": false,
+      "all": [
+        "google", "facebook", "weibo", "twitter",
+        "qq", "qzone", "linkedin", "pocket"
+      ]
     },
     "anchor-navigation-ex": {
-    "showLevel": false
+      "showLevel": false
     },
     "favicon": {
-    "shortcut": "./source/images/favicon.jpg",
-    "bookmark": "./source/images/favicon.jpg",
-    "appleTouch": "./source/images/apple-touch-icon.jpg",
-    "appleTouchMore": {
-    "120x120": "./source/images/apple-touch-icon.jpg",
-    "180x180": "./source/images/apple-touch-icon.jpg",}
+      "shortcut": "./source/images/favicon.jpg",
+      "bookmark": "./source/images/favicon.jpg",
+      "appleTouch": "./source/images/apple-touch-icon.jpg",
+      "appleTouchMore": {
+        "120x120": "./source/images/apple-touch-icon.jpg",
+        "180x180": "./source/images/apple-touch-icon.jpg"
+      }
     }
-}
-```
+  }
 
+}
