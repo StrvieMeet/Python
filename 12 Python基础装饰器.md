@@ -1,772 +1,423 @@
-[TOC]
-
-
-
-# Python 装饰器及内置函数 
+# Python 装饰器
 
 ## 一.装饰器
 
-我们到了新的阶段了,也是逃不过的一劫,装饰器,有的兄弟们估计听说过,这可是一个神奇的东西,
+在讲解装饰器之前的时候我们先讲解一下开放封闭原则
 
-在认识它之前我们先来回顾一下闭包
+### **1. 开放封闭原则**
+
+​    什么是开放封闭原则？有的同学问开放，封闭这是两个反义词这还能组成一个原则么？这不前后矛盾么？其实不矛盾。开放封闭原则是分情况讨论的。
+
+​    我们的软件一旦上线之后（比如你的软件主要是多个函数组成的）,那么这个软件对功能的扩展应该是开放的，比如你的游戏一直在迭代更新，推出新的玩法，新功能。但是对于源代码的修改是封闭的。你就拿函数举例，如果你的游戏源代码中有一个函数是闪躲的功能，那么你这个函数肯定是被多个地方调用的，比如对方扔手雷，对方开枪，对方用刀，你都会调用你的闪躲功能，那么如果你的闪躲功能源码进行改变了，或者调用方式改变了，当对方发起相应的动作，你在调用你的闪躲功能，就会发生问题。所以，开放封闭原则具体定义是这样：
+
+​    1.对扩展是开放的
+
+​        我们说，任何一个程序，不可能在设计之初就已经想好了所有的功能并且未来不做任何更新和修改。所以我们必须允许代码扩展、添加新功能。
+
+​    2.对修改是封闭的
+
+​        就像我们刚刚提到的，因为我们写的一个函数，很有可能已经交付给其他人使用了，如果这个时候我们对函数内部进行修改，或者修改了函数的调用方式，很有可能影响其他已经在使用该函数的用户。OK，理解了开封封闭原则之后，我们聊聊装饰器。
+
+​    什么是装饰器？从字面意思来分析，先说装饰，什么是装饰? 装饰就是添加新的，
+
+​    比如我现在不会飞，怎么才能让我会飞？给我额外增加一个翅膀，我就能飞了。那么你给我加一个翅膀，它会改变我原来的行为么？我之前的吃喝拉撒睡等生活方式都不会改变。它就是在我原来的基础上，添加了一个新的功能。
+
+今天我们讲的装饰器（翅膀）是以功能为导向的，就是一个函数。
+
+被装饰的对象：我本人，其实也是一个函数。
+
+**所以装饰器最终最完美的定义就是：在不改变原被装饰的函数的源代码以及调用方式下，为其添加额外的功能。**
+
+### **2. 初识装饰器**
+
+接下来，我们通过一个例子来为大家讲解这个装饰器：
+
+需求介绍：你现在xx科技有限公司的开发部分任职，领导给你一个业务需求让你完成：让你写代码测试小明同学写的函数的执行效率。
 
 ```
-def func1():
-    name = "alex"
-    def func2():
-        print(name)
-        # 闭包
-    func2()
-func1()
+def index():
+    print('欢迎访问博客园主页')
 ```
 
-这就是闭包,那刚刚说一个很神奇的东西,为什么又说闭包了呢? 机智的铁子们已经猜到,装饰器和闭包是有点关系的,是滴没错.
+**版本1：**
 
-那什么是装饰器呢?装饰器是干什么的呢?
-
-现在你在公司，领导让你写一个函数，来测试另一个函数的执行效率，你怎么做？
+​    需求分析：你要想测试此函数的执行效率，你应该怎么做？应该在此函数执行前记录一个时间， 执行完毕之后记录一个时间，这个时间差就是具体此函数的执行效率。那么执行时间如何获取呢？ 可以利用time模块，有一个time.time()功能。
 
 ```
-先引入时间概念。
 import time
-def func():
-    print('嘻嘻更健康')
+print(time.time())
+```
+
+​    此方法返回的是格林尼治时间，是此时此刻距离1970年1月1日0点0分0秒的时间秒数。也叫时间戳，他是一直变化的。所以要是计算index的执行效率就是在执行前后计算这个时间戳的时间，然后求差值即可。
+
+```python
 import time
+def index():
+    print('欢迎访问博客园主页')
+
 start_time = time.time()
-time.sleep(0.1)
-func()
+index()
 end_time = time.time()
-print('----> 执行效率%s'%(end_time - start_time))
+print(f'此函数的执行效率为{end_time-start_time}')
 ```
 
-上面你已经写完了，但是你应该放在函数中，这样减少重复代码，可读性好，ok继续做。
+由于index函数只有一行代码，执行效率太快了，所以我们利用time模块的一个sleep模拟一下
 
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+
+start_time = time.time()
+index()
+end_time = time.time()
+print(f'此函数的执行效率为{end_time-start_time}')
 ```
-def func():
-    print('嘻嘻更健康')
-def timmer(f):
+
+**版本1分析**：你现在已经完成了这个需求，但是有什么问题没有？ 虽然你只写了四行代码，但是你完成的是一个测试其他函数的执行效率的功能，如果让你测试一下，小张，小李，小刘的函数效率呢？ 你是不是全得复制：
+
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园首页')
+
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
+
+start_time = time.time()
+index()
+end_time = time.time()
+print(f'此函数的执行效率为{end_time-start_time}')
+
+start_time = time.time()
+home('太白')
+end_time = time.time()
+print(f'此函数的执行效率为{end_time-start_time}')
+```
+
+重复代码太多了，所以要想解决重复代码的问题，怎么做？我们是不是学过函数，函数就是以功能为导向，减少重复代码，好我们继续整改。
+
+**版本2：**
+
+```python
+import time
+
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+
+def inner():
     start_time = time.time()
-    time.sleep(0.1)
-    f()
+    index()
     end_time = time.time()
-    print('----> 执行效率%s'%(end_time - start_time))
+    print(f'此函数的执行效率为{end_time-start_time}')
+
+inner()
 ```
 
-好你又写完了，但是执行之前的函数只是func(),而你写玩了这个之后，还得加一步timmer(func),如果要是领导让你测试500个函数的执行效率呢？好，你又进一步改，如下
+但是你这样写也是有问题的，你虽然将测试功能的代码封装成了一个函数，但是这样，你只能测试小明同学的的函数index，你要是测试其他同事的函数呢？你怎么做？
 
-```
-func()
-f1 = func  # func
-func = timmer  # timmer
-func(f1)
-将他的执行结果改了一下，这样看似func(f1)与原来的调用差不多，但是加了好几步，而且添加了f1参数。。。
-```
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
 
-现在你请教了我，我说来，写个装饰器就能解决。
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
 
-```
-def timmer(f):  #小花
-    def inner():  # 小红
-        start_time = time.time()
-        time.sleep(0.1)
-        f()
-        end_time = time.time()
-        print('----> 执行效率%s' % (end_time - start_time))
-    return inner
-    
-def func(): #小刚
-	print("is func")
-func = timmer(func)  # inner
-func() # inner()
+def inner():
+    start_time = time.time()
+    index()
+    home('太白')
+    end_time = time.time()
+    print(f'此函数的执行效率为{end_time-start_time}')
+
+timer()
 ```
 
-这样，就写好了，这是最简单的装饰器，装饰任何函数，只需要加一句func = timmer(func) 
+你要是像上面那么做，每次测试其他同事的代码还需要手动改，这样是不是太low了？所以如何变成动态测试其他函数？我们是不是学过函数的传参？能否将被装饰函数的函数名作为函数的参数传递进去呢？
 
-肯定有人在想,这一堆鬼东西是什么啊,慢 别急往下看.兄弟我说的是往下看文章,不是看你下边
+ **版本3：**
 
-func函数是小刚,timmer函数是小花,inner函数是小红.小花和小红是非常好的闺蜜
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
 
-小刚对小红一直暗生情愫,直到有一天憋不住了想和小红说但是,又想知道小红对他什么看法所以小刚找到了小花
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
 
-然后把他的想法和小花说了,小花然后问小红你觉得小刚怎么样.小红说很好啊,我还挺喜欢他的,然后小花就把小红的话告诉了小刚,小刚听了这句话很是激动,然后就直接去找小红和小红进行表白了.
+def timmer(func):  # func == index 函数
+    start_time = time.time()
+    func()  # index()
+    end_time = time.time()
+    print(f'此函数的执行效率为{end_time-start_time}')
 
+timmer(index)
 ```
-#简单的装饰器
-def func():
-    print('嘻嘻更健康')
-def timmer(f):
+
+这样我将index函数的函数名作为参数传递给timmer函数，然后在timmer函数里面执行index函数，这样就变成动态传参了。好，你们现在将版本3的代码快速练一遍。 大家练习完了之后，发现有什么问题么？ 对比着开放封闭原则说： 首先，index函数除了完成了自己之前的功能，还增加了一个测试执行效率的功能，对不？所以也符合开放原则。 其次，index函数源码改变了么？没有，但是执行方式改变了，所以不符合封闭原则。 原来如何执行？ index() 现在如何执行？ inner(index),这样会造成什么问题？ 假如index在你的项目中被100处调用，那么这相应的100处调用我都得改成inner(index)。 非常麻烦，也不符合开放封闭原则。
+
+**版本4：**实现真正的开放封闭原则：装饰器。
+
+这个也很简单，就是我们昨天讲过的闭包，只要你把那个闭包的执行过程整清楚，那么这个你想不会都难。
+
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
+```
+
+你将上面的inner函数在套一层最外面的函数timer，然后将里面的inner函数名作为最外面的函数的返回值，这样简单的装饰器就写好了，一点新知识都没有加，这个如果不会就得多抄几遍，抄的时候要理解一下代码。
+
+```python
+def timer(func):  # func = index
     def inner():
         start_time = time.time()
-        time.sleep(0.1)
-        f()
+        func()
         end_time = time.time()
-        print('----> 执行效率%s' % (end_time - start_time))
+        print(f'此函数的执行效率为{end_time-start_time}')
     return inner
-func = timmer(func)  # inner
-func() # inner()
+# f = timer(index)
+# f()
 ```
 
-但是Python认为你这个还是不简单，所以Python给你提供了一个更见的方式就是语法糖。
+我们分析一下，代码，代码执行到这一行：f = timer(index) 先执行谁？看见一个等号先要执行等号右边， timer(index) 执行timer函数将index函数名传给了func形参。内层函数inner执行么？不执行，inner函数返回 给f变量。所以我们执行f() 就相当于执行inner闭包函数。 f(),这样既测试效率又执行了原函数，有没有问题？当然有啦！！版本4你要解决原函数执行方式不改变的问题，怎么做？ 所以你可以把 f 换成 index变量就完美了！ index = timer(index) index()带着同学们将这个流程在执行一遍，特别要注意 函数外面的index实际是inner函数的内存地址而不是index函数。让学生们抄一遍，理解一下，这个timer就是最简单版本装饰器，在不改变原index函数的源码以及调用方式前提下，为其增加了额外的功能，测试执行效率。
 
-```
-#语法糖 @  
+### **3. 带返回值的装饰器**
 
-def timmer(f):
+​    你现在这个代码，完成了最初版的装饰器，但是还是不够完善，因为你被装饰的函数index可能会有返回值，如果有返回值，你的装饰器也应该不影响，开放封闭原则嘛。但是你现在设置一下试试：
 
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+    return '访问成功'
+
+def timer(func):  # func = index
     def inner():
-
         start_time = time.time()
-
-        time.sleep(0.1)
-
-        f()
-
+        func()
         end_time = time.time()
-
-        print('----> 执行效率%s' % (end_time - start_time))
-
+        print(f'此函数的执行效率为{end_time-start_time}')
     return inner
 
-@timmer  # func = timmer(func) 
-```
-
-语法糖的拆解
-
-@装饰器函数 == 重新定义被装饰函数=装饰器函数（被装饰函数）
-
-```
-def func():
-    print('嘻嘻更健康')
-func() # inner()
-```
-
-## 二.内置函数
-
-
-什么是内置函数? 就是python给你提供的. 拿来直接用的函数, 比如print., input等等.
-
-截止 到python版本3.6.2 python一共提供了68个内置函数. 有 一些我们已经用过了. 有一些还没有用过. 还有一些需要学完了面向对象才能继续学习的.
-
-今 天我们就认识一下python的内置函数.
-
-![img](http://crm.pythonav.com/media/uploads/2018/11/28/IMAGE_VeRf3JP.PNG)
-
-### 2.1 作用域相关  
-
-#### ​    2.1.1 locals()      返回当前作⽤用域中的名字
-
-#### ​    2.1.2 globals()    返回全局作⽤用域中的名字
-
-### 2.2 迭代器相关
-
-#### ​     2.2.1 range()       生成数据    
-
-#### ​     2.2.2.next()         迭代器向下执⾏一次, 内部实际使用了__next__()方法返回迭代器的下一个项目    
-
-#### ​     2.2.3  iter()           获取迭代器, 内部实际使用的是__iter__()方法来获取迭代器
-
-### 2.3 字符串类型代码的执行
-
-#### 2.3.1 eval() 执行部分字符串类型的代码,并返回最终结果
-
-```
-print(eval("2+2"))
-# 4
-n = 8
-print(eval("2+n"))
-# 10
-
-def func():
-    print(666)
-
-eval("func()")
-# 666
-```
-
-#### 2.3.2 exec() 执行字符串类型的代码
-
-```
-msg = '''
-def func():
-    print('有计划没行动等于零')
-    
-func()
-'''
-exec(msg)
-```
-
-以上这两个在公司开发中禁止使用,如果里边出现del就会出现很大的问题
-
-### 2.4 输入和输出相关
-
-#### 2.4.1 input()    获取用户输入的内容 
-
-#### 2.4.2 print()    打印输出
-
-```
-print('你好','我好')    
-print('你好','我好',sep='|')
-
-结果:
-你好 我好
-你好|我好
-```
-
-sep是将多个元素进行修改 默认的是空格
-
-```
-print('你好')
-print('我好')
-
-print('你好',end='')
-print('我好')
-```
-
-end默认是\n 这就是我们为什么使用print的时候会出现换行,end的值修改成了空字符串
-
-### 2.5 内存相关   
-
-#### 2.5.1 hash()    获取到对象的哈希值(int, str, bool, tuple)
-
-```
-print(hash('123'))
-结果:
--6822401661081700707
-```
-
-这样是求出数据结构,如果能够获取到哈希值就是可以当做字典的键
-
-#### 2.5.2 id()      获取到对象的内存地址 
-
-### 2.6 文件操作相关
-
-#### 2.6.1 open()    用于打开一个文件, 创建一个文件句柄
-
-### 2.7 帮助  
-
-#### 2.7.1 help()    函数用于查看函数或模块用途的详细说明 
-
-```
-help(print)
-
-结果:
-Help on built-in function print in module builtins:
-
-print(...)
-    print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
-    
-    Prints the values to a stream, or to sys.stdout by default.
-    Optional keyword arguments:
-    file:  a file-like object (stream); defaults to the current sys.stdout.
-    sep:   string inserted between values, default a space.
-    end:   string appended after the last value, default a newline.
-    flush: whether to forcibly flush the stream.
-
-
-Process finished with exit code 0
-```
-
-### 2.8 调用相关   
-
-2. #### 8.1 callable()  用于检查一个对象是否是可调用的. 如果返回True, object有可能调用失败, 但如果返回False. 那调用绝对不会成功 
-
-```
-print(callable(print))
-结果:
-True
-```
-
-### 2.9 查看内置属性    
-
-#### ​    2.9.1 dir()查看对象的内置属性
-
-方法.访问的是对象中的__dir__()⽅方法 
-
-```
-print(dir(list))
-结果:
-['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
-```
-
-### 2.10 基础数据类型相关    
-
-#### 2.10.1 数字相关
-
-​        bool()  将给定的数据转换成bool值. 如果不给值. 返回False        
-​        int()     将给定的数据转换成int值. 如果不给值, 返回0        
-​        ﬂoat()  将给定的数据转换成ﬂoat值. 也就是小数        
-​        complex()  创建一个复数. 第一个参数为实部, 第二个参数为虚部. 或者第一个参数直接 用字符串来描述复数    
-
-#### 2.10.2 数学运算
-
-​        abs()         返回绝对值
-
-```
-print(abs(-1))
-结果:
-1
-```
-
-​        divmod()     返回商和余数        
-
-```
-print(divmod(15,2))
-结果:
-(7, 1)
-```
-
-​        round()        四舍五入 
-
-```
-print(round(15.1111,2))  # 保留2位小数
-结果:
-15.11
-```
-
-​        pow(a, b)    求a的b次幂, 如果有三个参数. 则求完次幂后对第三个数取余
-
-```
-print(pow(15,2,3))
-结果:
-0
-```
-
-​        sum()        求和
-
-```
-print(sum([12,3,4]))  #sum里边的参数是一个可迭代对象
-结果:
-19
-```
-
-​        min()    求最小值 
-
-```
-print(min([12,3,4]))  # 寻找最小的数字
-结果:
-3
-```
-
-​        max()    求最大值
-
-```
-print(max([12,3,4]))  # 寻找最大的数字
-结果:
-12
-```
-
-#### 2.10 .3数据结构相关
-
-​    列表和元组:        
-​        list()        将一个可迭代对象转换成列表        
-​        tuple()       将一个可迭代对象转换成元组        
-​        reversed()    将一个序列翻转, 返回翻转序列的迭代器
-
-reversed 示例:
-
-```
-l = reversed('你好')  # l 获取到的是一个生成器
-print(list(l))
-```
-
-字符串相关:    
-    str()        将数据转化成字符串       
-    format()     与具体数据相关, 用于计算各种小数, 精算等 
-
-```
-print(format('meet','>20'))   # 右对齐
-print(format('meet','<20'))   # 左对齐
-print(format('meet','^20'))   # 居中
-```
-
-数值
-
-```
-#数值
-
-print(format(3,'b'))    # 二进制
-
-print(format(97,'c'))   # 转换成unicodezif
-
-print(format(11,'d'))   #十进制
-
-print(format(56))     #和d一样
-
-print(format(11,'n'))   #十进制
-
-print(format(11,'o'))   #八进制
-
-print(format(11,'x'))  # 十六进制(小写字母)
-
-print(format(11,'X'))  # 十六进制(大写字母)
-
-
-
-# 浮点数
-
-print(format(1234567890,'e'))  #科学计算法,默认使用6位
-
-print(format(123456789,'0.2e'))# 科学计算,保留2位小数(小写)
+index = timer(index)
+print(index())  # None
+```
+
+加上装饰器之后，他的返回值为None，为什么？因为你现在的index不是函数名index，这index实际是inner函数名。所以index() 等同于inner() 你的 '访问成功'返回值应该返回给谁？应该返回给index，这样才做到开放封闭，实际返回给了谁？实际返回给了func，所以你要更改一下你的装饰器代码，让其返回给外面的index函数名。 所以：你应该这么做：
+
+```python
+def timer(func):  # func = index
+    def inner():
+        start_time = time.time()
+        ret = func()
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+        return ret
+    return inner
 
-print(format(123456789,'0.2E'))# 科学计算,保留2位小数(大写)
+index = timer(index)  # inner
+print(index())  # print(inner())
+```
+
+借助于内层函数inner，你将func的返回值，返回给了inner函数的调用者也就是函数外面的index，这样就实现了开放封闭原则，index返回值，确实返回给了'index'。
+
+让同学们；练习一下。
+
+### 4. 被装饰函数带参数的装饰器
+
+到目前为止，你的被装饰函数还是没有传参呢？按照我们的开放封闭原则，加不加装饰器都不能影响你被装饰函数的使用。所以我们看一下。
+
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+    return '访问成功'
 
-print(format(1.23456789,'f')) #小数点计数法,保留6位小数
-
-print(format(1.23456789,'0.2f')) # 小数点计数法,保留2位数
-
-print(format(1.23456789,'0.10f')) # 小数点计数法,保留2位数
-
-print(format(1.23456789e+1000,'F')) # 小数点计数法
-```
-
-bytes()  把字符串转换成bytes类型
-
-```
-s = '你好武大'
-
-bs = s.encode('utf-8')
-
-print(bs)
-
-结果:b'\xe4\xbd\xa0\xe5\xa5\xbd\xe6\xad\xa6\xe5\xa4\xa7'
-
-s1 = bs.decode('utf-8')
-
-print(s1)
-
-结果: 你好武大
-
-
-s = '你好'
-bs = bytes(s,encoding='utf-8')
-print(bs)
-# 将字符串转换成字节
-
-bs1 = str(bs,encoding='utf-8')
-print(bs1)
-# 将字节转换成字符串
-```
-
-repr()    返回一个对象的官方表示形式
-
-```
-# repr 输出一个字符串的官方表示形式. 
-print(repr('大家好,\n \t我叫周杰伦')) print('大家好我叫周杰伦') 
-
-# %r  
-%r用的就是repr 
-
-name = 'taibai' 
-print('我叫%r' % name)
-```
-
-### 2.11 数据集合
-
-　　dict() 创建一个字典
-
-　　set() 创建一个集合
-
-　　frozenset() 创建一个冻结的集合,冻结的集合不能进行添加和删除操作
-
-### 2.12 其他相关
-
-　　len()  返回一个对象的元素个数
-
-　　enumerate()  获取枚举对象
-
-enumerate()  举例
-
-```
-lst = ['alex','wusir','taibai']
-for i,k in enumerate(lst):
-    print('这是序号',i)
-    print('这是元素',k)
-```
-
-all()  可迭代对象中全部是True,结果才是True
-
-```
-lst = [1,2,3,4,True,0,False]
-
-lst1 = [1,2,3,4,True]
-
-print(all(lst))
-
-print(all(lst1))
-
-结果:
-
-False
-
-True
-```
-
-any()  可迭代对象中有一个是True,就是True　
-
-```
-lst = [1,2,3,4,True,0,False]
-
-lst1 = [1,2,3,4,True]
-
-print(any(lst))
-
-print(any(lst1))
-
-结果:
-
-False
-
-True
-```
-
-zip()  函数用于将可迭代的对象作为参数,将对象中对应的元素打包成一个个元祖,
-
-然后返回由这些元祖组成的内容,如果各个迭代器的元素个数不一致,则按照长度最短的返回
-
-```
-lst1 = [1,2,3]
-
-lst2 = ['a','b','c','d']
-
-lst3 = (11,12,13,14,15)
-
-for i in zip(lst1,lst2,lst3):
-
-    print(i)
-
-结果:
-
-(1, 'a', 11)
-
-(2, 'b', 12)
-
-(3, 'c', 13)　
-```
-
-### 2.13 lambda
-
-匿名函数,为了解决一些简单的需求而设计的一句话函数
-
-```
-def func(n):
-    return n**n
-print(func(4))
- 
-f = lambda x: x**x
-print(f(4))
- 
-结果:
-256
-256
-```
-
-lambda表示的是匿名函数,不需要用def来声明,一句话就可以声明出一个函数
-
-语法:
-
-　　函数名 = lambda 参数:返回值
-
-注意:
-
-　　1.函数的参数可以有多个,多个参数之间用逗号隔开
-
-　　2.匿名函数不管多复杂.只能写一行.且逻辑结束后直接返回数据
-
-　　3.返回值和正常的函数一样,可以是任意数据类型,返回值的时候只能返回一个不能返回多个
-
-匿名函数并不是说一定没有名字,这里前面的变量就是一个函数名,说他是匿名原因是我们通过
-
-__name__查看的时候是没有名字的.统一都叫做lambda.在调用的时候没有什么特别之处
-
-像正常的函数调用既可
-
-### 2.14 sorted
-
-排序函数
-
-语法:sorted(iterable,key=None,reverse=False)
-
-iterable :  可迭代对象
-
-key: 排序规则(排序函数),在sorted内部会将可迭代对象中的每一个元素传递给这个函数的参数.根据函数运算的结果进行排序
-
-reverse :是否是倒叙,True  倒叙  False 正序
-
-```
-lst = [1,3,2,5,4]
-lst2 = sorted(lst)
-print(lst)    #原列表不会改变
-print(lst2)   #返回的新列表是经过排序的
- 
- 
-lst3 = sorted(lst,reverse=True)
-print(lst3)   #倒叙
- 
-结果:
-[1, 3, 2, 5, 4]
-[1, 2, 3, 4, 5]
-[5, 4, 3, 2, 1]
-```
-
-字典使用sorted排序
-
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
+
+def timer(func):  # func = index
+    def inner():
+        start_time = time.time()
+        func()
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+    return inner
+
+# 要想timer装饰home函数怎么做？
+home = timer(home)
+home('太白')
+```
+
+上面那么做，显然报错了，为什么？ 你的home这个变量是谁？是inner，home('太白')实际是inner('太白')但是你的'太白'这个实参应该传给谁？ 应该传给home函数，实际传给了谁？实际传给了inner，所以我们要通过更改装饰器的代码，让其将实参'太白'传给home.
+
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+    return '访问成功'
+​
+def home(name):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(f'欢迎访问{name}主页')
+​
+def timer(func):  # func = home
+    def inner(name):
+        start_time = time.time()
+        func(name)  # home(name) == home('太白')
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+    return inner
+​
+# 要想timer装饰home函数怎么做？
+home = timer(home)
+home('太白')
 ```
-dic = {1:'a',3:'c',2:'b'}
-print(sorted(dic))   # 字典排序返回的就是排序后的key
- 
-结果:
-[1,2,3]
+
+这样你就实现了，还有一个小小的问题，现在被装饰函数的形参只是有一个形参，如果要是多个怎么办？有人说多少个我就写多少个不就行了，那不行呀，你这个装饰器可以装饰N多个不同的函数，这些函数的参数是不统一的。所以你要有一种可以接受不定数参数的形参接受他们。这样，你就要想到*args，**kwargs。
+
+```python
+import time
+def index():
+    time.sleep(2)  # 模拟一下网络延迟以及代码的效率
+    print('欢迎访问博客园主页')
+    return '访问成功'
+
+def home(name,age):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(name,age)
+    print(f'欢迎访问{name}主页')
+
+def timer(func):  # func = home
+    def inner(*args,**kwargs):  # 函数定义时，*代表聚合：所以你的args = ('太白',18)
+        start_time = time.time()
+        func(*args,**kwargs)  # 函数的执行时，*代表打散：所以*args --> *('太白',18)--> func('太白',18)
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+    return inner
+
+home = timer(home)
+home('太白',18)
 ```
 
-和函数组合使用
+这样利用*的打散与聚合的原理，将这些实参通过inner函数的中间完美的传递到给了相应的形参。
 
-```
-# 定义一个列表,然后根据一元素的长度排序
-lst = ['天龙八部','西游记','红楼梦','三国演义']
- 
-# 计算字符串的长度
-def func(s):
-    return len(s)
-print(sorted(lst,key=func))
- 
-# 结果:
-# ['西游记', '红楼梦', '天龙八部', '三国演义']
-```
-
-和lambda组合使用
-
-```
-lst = ['天龙八部','西游记','红楼梦','三国演义']
- 
-print(sorted(lst,key=lambda s:len(s)))
- 
-结果:
-['西游记', '红楼梦', '天龙八部', '三国演义']
- 
- 
-lst = [{'id':1,'name':'alex','age':18},
-    {'id':2,'name':'wusir','age':17},
-    {'id':3,'name':'taibai','age':16},]
- 
-# 按照年龄对学生信息进行排序
- 
-print(sorted(lst,key=lambda e:e['age']))
- 
-结果:
-[{'id': 3, 'name': 'taibai', 'age': 16}, {'id': 2, 'name': 'wusir', 'age': 17}, {'id': 1, 'name': 'alex', 'age': 18}]
-```
-
-### 2.15 filter
-
-筛选过滤
-
-语法:  filter(function,iterable)
-
-function: 用来筛选的函数,在filter中会自动的把iterable中的元素传递给function,然后根据function返回的True或者False来判断是否保留此项数据
-
-iterable:可迭代对象
-
-```
-lst = [{'id':1,'name':'alex','age':18},
-        {'id':1,'name':'wusir','age':17},
-        {'id':1,'name':'taibai','age':16},]
- 
-ls = filter(lambda e:e['age'] > 16,lst)
- 
-print(list(ls))
- 
-结果:
-[{'id': 1, 'name': 'alex', 'age': 18},
- {'id': 1, 'name': 'wusir', 'age': 17}]
-```
-
-### 2.16 map
+好将上面的代码在敲一遍。
 
-映射函数
+### **5. 标准版装饰器**
 
-语法:  map(function,iterable) 可以对可迭代对象中的每一个元素进映射,分别取执行function
+代码优化：语法糖
 
-计算列表中每个元素的平方,返回新列表
+根据我的学习，我们知道了，如果想要各给一个函数加一个装饰器应该是这样：
 
-```
-lst = [1,2,3,4,5]
-
-def func(s):
-
-    return  s*s
-
-mp = map(func,lst)
-
-print(mp)
-
-print(list(mp))
-```
-
-改写成lambda
+```python
+def home(name,age):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(name,age)
+    print(f'欢迎访问{name}主页')
 
-```
-lst = [1,2,3,4,5]
+def timer(func):  # func = home
+    def inner(*args,**kwargs):
+        start_time = time.time()
+        func(*args,**kwargs)
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+    return inner
 
-print(list(map(lambda s:s*s,lst)))
+home = timer(home)
+home('太白',18)
 ```
 
-计算两个列表中相同位置的数据的和
+ 如果你想给home加上装饰器，每次执行home之前你要写上一句：home = timer(home)这样你在执行home函数 home('太白',18) 才是真生的添加了额外的功能。但是每次写这一句也是很麻烦。所以，Python给我们提供了一个简化机制，用一个很简单的符号去代替这一句话。
 
+```python
+def timer(func):  # func = home
+    def inner(*args,**kwargs):
+        start_time = time.time()
+        func(*args,**kwargs)
+        end_time = time.time()
+        print(f'此函数的执行效率为{end_time-start_time}')
+    return inner
+​
+@timer  # home = timer(home)
+def home(name,age):
+    time.sleep(3)  # 模拟一下网络延迟以及代码的效率
+    print(name,age)
+    print(f'欢迎访问{name}主页')
+​
+home('太白',18)
 ```
-lst1 = [1, 2, 3, 4, 5]
-
-lst2 = [2, 4, 6, 8, 10]
 
-print(list(map(lambda x, y: x+y, lst1, lst2)))
+你看此时我调整了一下位置，你要是不把装饰器放在上面，timer是找不到的。home函数如果想要加上装饰器那么你就在home函数上面加上@home，就等同于那句话 home = timer(home)。这么做没有什么特殊意义，就是让其更简单化，比如你在影视片中见过野战军的作战时由于不方便说话，用一些简单的手势代表一些话语，就是这个意思。
 
-结果:
+**至此标准版的装饰器就是这个样子：**
 
-[3, 6, 9, 12, 15]
 ```
-
-### 2.17 reduce
-
+def wrapper(func):
+    def inner(*args,**kwargs):
+        '''执行被装饰函数之前的操作'''
+        ret = func
+        '''执行被装饰函数之后的操作'''
+        return ret
+    return inner
 ```
-from functools import reduce
-def func(x,y):
-    return x + y
 
-# reduce 的使用方式:
-# reduce(函数名,可迭代对象)  # 这两个参数必须都要有,缺一个不行
+这个就是标准的装饰器，完全符合代码开放封闭原则。这几行代码一定要背过，会用。
 
-ret = reduce(func,[3,4,5,6,7])
-print(ret)  # 结果 25
-reduce的作用是先把列表中的前俩个元素取出计算出一个值然后临时保存着,
-接下来用这个临时保存的值和列表中第三个元素进行计算,求出一个新的值将最开始
-临时保存的值覆盖掉,然后在用这个新的临时值和列表中第四个元素计算.依次类推
+**此时我们要利用这个装饰器完成一个需求：简单版模拟博客园登录。** 此时带着学生们看一下博客园，说一下需求： 博客园登陆之后有几个页面，diary，comment，home，如果我要访问这几个页面，必须验证我是否已登录。 如果已经成功登录，那么这几个页面我都可以无阻力访问。如果没有登录，任何一个页面都不可以访问，我必须先登录，登录成功之后，才可以访问这个页面。我们用成功执行函数模拟作为成功访问这个页面，现在写三个函数，写一个装饰器，实现上述功能。
 
-注意:我们放进去的可迭代对象没有更改
-以上这个例子我们使用sum就可以完全的实现了.我现在有[1,2,3,4]想让列表中的数变成1234,就要用到reduce了.
-普通函数版
-from functools import reduce
+```python
+login_status = {
+    'username': None,
+    'status': False,
+}
 
-def func(x,y):
+def auth(func):
+    def inner(*args,**kwargs):
+        if login_status['status']:
+            ret = func()
+            return ret
+        username = input('请输入用户名：').strip()
+        password = input('请输入密码：').strip()
+        if username == '太白' and password == '123':
+            login_status['status'] = True
+            ret = func()
+            return ret
+    return inner
 
-    return x * 10 + y
-    # 第一次的时候 x是1 y是2  x乘以10就是10,然后加上y也就是2最终结果是12然后临时存储起来了
-    # 第二次的时候x是临时存储的值12 x乘以10就是 120 然后加上y也就是3最终结果是123临时存储起来了
-    # 第三次的时候x是临时存储的值123 x乘以10就是 1230 然后加上y也就是4最终结果是1234然后返回了
+@auth
+def diary():
+    print('欢迎访问日记页面')
 
-l = reduce(func,[1,2,3,4])
-print(l)
+@auth
+def comment():
+    print('欢迎访问评论页面')
 
+@auth
+def home():
+    print('欢迎访问博客园主页')
 
-匿名函数版
-l = reduce(lambda x,y:x*10+y,[1,2,3,4])
-print(l)
+diary()
+comment()
+home()
 ```
-
-在Python2.x版本中recude是直接 import就可以的, Python3.x版本中需要从functools这个包中导入
-
-龟叔本打算将 lambda 和 reduce 都从全局名字空间都移除, 舆论说龟叔不喜欢lambda 和 reduce
-
-最后lambda没删除是因为和一个人写信写了好多封,进行交流然后把lambda保住了.
-
-参考资料:
 
-<https://www.processon.com/view/link/5b4ee15be4b0edb750de96ac>
