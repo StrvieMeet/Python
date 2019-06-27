@@ -4,7 +4,6 @@
     "author": "Meet",
     "output.name": "gitbooks",
     "language": "zh-hans",
-    "gitbook": "3.2.2",
     "root": ".",
     "structure": {
         "readme": "README.md"
@@ -74,6 +73,7 @@
         "3-ba": {
             "token": "ff100361cdce95dd4c8fb96b4009f7bc"
         },
+
         "donate": {
             "wechat": "./assets/image-20190625190804041.png",
             "alipay": "./assets/image-20190625190902858.png",
