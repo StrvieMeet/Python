@@ -2,7 +2,7 @@
 
 ### 一.Python环境安装
 
-#### 1.1打开官网：<http://www.python.org>，点击`Downloads`下载,如下图
+#### 1.1打开官网：http://www.python.org 点击`Downloads`下载,如下图
 
 ![1548322274348](assets/1548322274348.png)
 
@@ -38,7 +38,7 @@
 
 #### 1.8 安装进度
 
-![1548326046866](/Users/meet/gitbook/assets/1548322874729.png)
+![1548326046866](assets/1548322874729.png)
 
 #### 1.9 安装成功
 
