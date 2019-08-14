@@ -1,12 +1,10 @@
-# Python 面向对象初识
-
-## 一.回顾
+## 一.面向对象初识
 
 ### 1.1 面向过程编程vs函数式编程
 
 我们在没有学习函数的时候,写的代码都是面向过程式编程
 
-```
+```python
 # 面向过程编程 测量对象的元素的个数。
 s1 = 'fjdsklafsjda'
 count = 0
@@ -22,7 +20,7 @@ for i in l1:
 
 在我们学习函数后就是在面向函数编程
 
-```
+```python
 def func(s):
     count = 0
     for i in s:
@@ -44,7 +42,7 @@ func([1,2,3,4])
 
 函数式编程
 
-```
+```python
 # 函数式编程
 
 # auth 认证相关
@@ -75,7 +73,7 @@ def save(username,money):
 
 面向对象编程
 
-```
+```python
 class LoginHandler:
     def login(self):
         pass
@@ -127,7 +125,7 @@ class ShoppingCar:
 
 ### 2.2 类的结构
 
-```
+```python
 class Human:
     """
     此类主要是构建人类
@@ -150,7 +148,7 @@ Human是此类的类名，类名使用驼峰(CamelCase)命名风格，首字母�
 
 第一种，查看类中的所有内容：类名.__dict__方式。
 
-```
+```python
 class Human:
     """
     此类主要是构建人类
@@ -173,7 +171,7 @@ print(Human.__dict__)  # 错误
 
  第二种：万能的点. 
 
-```
+```python
 class Human:
     """
     此类主要是构建人类
@@ -199,7 +197,7 @@ print(Human.walk)
 
 　　前提：除了两个特殊方法：静态方法，类方法之外，一般不会通过类名操作一个类中的方法。
 
-```
+```Python
 class Human:
     """
     此类主要是构建人类
@@ -219,15 +217,15 @@ Human.tools(111)
 Human.__dict__['work'](111)
 ```
 
-## 三. 从对象的角度研究类
+## 四. 从对象的角度研究类
 
-### 3.1 什么是对象
+### 4.1 什么是对象
 
 **对象是从类中出来的，只要是类名加上（），这就是一个实例化过程，这个就会实例化一个对象。**
 
 执行下列代码会发生什么事情？
 
-```
+```python
 class Human:
     mind = '有思想'
     def __init__(self):
@@ -254,7 +252,7 @@ print(obj)  # <__main__.Human object at 0x00000191508AA828>
 
 示例：
 
-```
+```python
 class Human:
     mind = '有思想'
     language = '使用语言'
@@ -272,7 +270,7 @@ obj = Human('barry','男',18,'运动')
 
 对象查询对象中所有属性。 对象._dict_
 
-```
+```python
 class Human:
 
     mind = '有思想'
@@ -290,7 +288,7 @@ print(obj.__dict__)  # {'n': 'barry', 'h': '运动', 's': '男', 'a': 18}
 
 对象操作对象中的单个属性。 万能的点 .
 
-```
+```python
 class Human:
 
     mind = '有思想'
@@ -310,9 +308,9 @@ print(obj.s)  # 查
 print(obj.__dict__)
 ```
 
-### 3.3 对象查看类中的属性
+### 4.3 对象查看类中的属性
 
-```
+```python
 class Human:
 
     mind = '有思想'
@@ -330,9 +328,9 @@ obj.a = 666
 print(obj.a)
 ```
 
-### 3.4 对象操作类中的方法
+### 4.4 对象操作类中的方法
 
-```
+```python
 class Human:
 
     mind = '有思想'
@@ -357,15 +355,13 @@ obj.tools()
 
 　　**类中的方法一般都是通过对象执行的（出去类方法，静态方法外），并且对象执行这些方法都会自动将对象空间传给方法中的第一个参数self.**
 
-### 3.5 self 是什么?
+### 4.5 self 是什么?
 
-```
 self其实就是类中方法（函数）的第一个位置参数，只不过解释器会自动将调用这个函数的对象传给self。所以咱们把类中的方法的第一个参数约定俗成设置成self, 代表这个就是对象。
-```
 
-### 3.6 一个类可以实例化多个对象
+### 4.6 一个类可以实例化多个对象
 
-```
+```python
 obj1= Human('小胖','男',20,'美女')
 obj2= Human('相爷','男',18,'肥女')
 print(obj1,obj2)

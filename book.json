@@ -14,10 +14,12 @@
         }
     },
     "plugins": [
+
         "-lunr",
         "-search",
         "-highlight",
         "-livereload",
+        "theme-comscore",
         "search-plus@^0.0.11",
         "github@^2.0.0",
         "github-buttons@2.1.0",
@@ -74,26 +76,30 @@
             "token": "ff100361cdce95dd4c8fb96b4009f7bc"
         },
 
-        "donate": {
-            "wechat": "./assets/image-20190625190804041.png",
-            "alipay": "./assets/image-20190625190902858.png",
-            "title": "",
-            "button": "赏",
-            "alipayText": "支付宝打赏",
-            "wechatText": "微信打赏"
-        },
-        "anchor-navigation-ex": {
-            "isRewritePageTitle": false,
-            "tocLevel1Icon": "fa fa-hand-o-right",
-            "tocLevel2Icon": "fa fa-hand-o-right",
-            "tocLevel3Icon": "fa fa-hand-o-right"
-        },
-        "sectionx": {
-            "tag": "b"
-        },
-        "favicon": {
-            "shortcut": "favicon.ico",
-            "bookmark": "favicon.ico"
-        }
+
+    "donate": {
+        "wechat": "./assets/image-20190801230612174.png",
+        "alipay": "./assets/image-20190801230428398.png",
+        "title": "",
+        "button": "赏",
+        "alipayText": "支付宝打赏",
+        "wechatText": "微信打赏"
+    },
+    "anchor-navigation-ex": {
+        "isRewritePageTitle": false,
+        "tocLevel1Icon": "fa fa-hand-o-right",
+        "tocLevel2Icon": "fa fa-hand-o-right",
+        "tocLevel3Icon": "fa fa-hand-o-right",
+        "tocLevel4Icon": "fa fa-hand-o-right"
+    },
+    "sectionx": {
+        "tag": "b"
+    },
+    "favicon": {
+        "shortcut": "favicon.ico",
+        "bookmark": "favicon.ico"
     }
+}
+
+
 }

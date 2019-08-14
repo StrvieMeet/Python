@@ -1,18 +1,14 @@
-[TOC]
-
-
-
 # Python面向对象之类成员
 
 ## 一.细分类的组成成员
 
 之前咱们讲过类大致分两块区域，如下图所示：
 
-![img](https://images2018.cnblogs.com/blog/988316/201806/988316-20180622170614471-754259023.png)
+![image-20190812205040538](assets/image-20190812205040538.png)
 
 每个区域详细划分又可以分为：
 
-```
+```python
 class A:
 
     company_name = '老男孩教育'  # 静态变量(静态字段)
@@ -46,6 +42,8 @@ class A:
         pass
 ```
 
+
+
 ## 二. 类的私有成员
 
 对于每一个类的成员而言都有两种形式：
@@ -62,7 +60,7 @@ class A:
 
 ### 2.1 公有静态属性(字段)
 
-```
+```python
 class C:
 
     name = "公有静态字段"
@@ -89,7 +87,7 @@ obj_son.show() # 派生类中可以访问
 
 ### 2.2 私有静态属性(字段)
 
-```
+```python
 class C:
 
     __name = "私有静态字段"
@@ -122,7 +120,7 @@ obj_son.show() #不可在派生类中可以访问
 
 ### 2.3 公有普通字段
 
-```
+```python
 class C:
     
     def __init__(self):
@@ -147,7 +145,7 @@ obj_son.show()  # 派生类中访问
 
 ### 2.4 私有对象属性
 
-```
+```python
 class C:
     
     def __init__(self):
@@ -179,7 +177,7 @@ obj_son.show()  # 派生类中访问  ==> 错误
 
 ### 2.5 公有方法
 
-```
+```python
 class C:
 
     def __init__(self):
@@ -203,7 +201,7 @@ obj.add()  # 派生类中访问
 
 ### 2.6 私有方法
 
-```
+```python
 class C:
 
     def __init__(self):
@@ -280,7 +278,7 @@ obj.__add()  # 派生类中不能访问
 
 **思考**：这个问题用类方法做比较合适，为什么？因为我实例化的是学生，但是如果我从学生这一个实例中获得班级总人数，在逻辑上显然是不合理的。同时，如果想要获得班级总人数，如果生成一个班级的实例也是没有必要的。
 
-```
+```python
 class Student:
     
     __num = 0
@@ -299,7 +297,7 @@ class Student:
 
 
 
-a = Student('太白金星', 18)
+a = Student('宝元', 18)
 b = Student('武sir', 36)
 c = Student('alex', 73)
 print(Student.getNum())
@@ -307,13 +305,13 @@ print(Student.getNum())
 
 #### 3.2 静态方法
 
-使用装饰器@staticmethod。
+使用装饰器@staticmethod
 
 静态方法是类中的函数，不需要实例。静态方法主要是用来存放逻辑性的代码，逻辑上属于类，但是和类本身没有关系，也就是说在静态方法中，不会涉及到类中的属性和方法的操作。可以理解为，静态方法是个**独立的、单纯的**函数，它仅仅托管于某个类的名称空间中，便于使用和维护。
 
 譬如，我想定义一个关于时间操作的类，其中有一个获取当前时间的函数。
 
-```
+```python
 import time
 
 class TimeTest(object):
@@ -343,7 +341,7 @@ print(nowTime)
 
 property是一种特殊的属性，访问它时会执行一段功能（函数）然后返回值
 
-```
+```python
 例一：BMI指数（bmi是计算而来的，但很明显它听起来像是一个属性而非方法，如果我们将其做成一个属性，更便于理解）
 
 成人的BMI数值：
@@ -358,7 +356,7 @@ property是一种特殊的属性，访问它时会执行一段功能（函数）
 
 例一代码
 
-```
+```python
 class People:
     def __init__(self,name,weight,height):
         self.name=name
@@ -368,7 +366,7 @@ class People:
     def bmi(self):
         return self.weight / (self.height**2)
 
-p1=People('egon',75,1.85)
+p1=People('meet',100,1.85)
 print(p1.bmi)
 ```
 
@@ -378,7 +376,7 @@ print(p1.bmi)
 
 **由于新式类中具有三种访问方式，我们可以根据他们几个属性的访问特点，分别将三个方法定义为对同一个属性：获取、修改、删除**
 
-```
+```python
 class Foo:
     @property
     def AAA(self):
@@ -418,7 +416,7 @@ del f1.AAA
 
 商品示例:
 
-```
+```python
 class Goods(object):
 
     def __init__(self):
@@ -447,9 +445,11 @@ obj.price = 200   # 修改商品原价
 del obj.price     # 删除商品原价
 ```
 
+
+
 ##  四. isinstace 与 issubclass
 
-```
+```python
 class A:
     pass
 
@@ -467,7 +467,7 @@ print(isinstance(obj,A))
 
 判断a是否是b类（或者b类的派生类）实例化的对象
 
-```
+```python
 class A:
     pass
 
@@ -487,7 +487,7 @@ print(issubclass(C,A))
 
 思考：那么 list str tuple dict等这些类与 Iterble类 的关系是什么？
 
-```
+```python
 from collections import Iterable
 
 print(isinstance([1,2,3], list))  # True

@@ -1,7 +1,3 @@
-[TOC]
-
-
-
 # Python 反射及双下方法
 
 ## 一.反射
@@ -16,7 +12,7 @@
 
 ### 1.1 对象的反射
 
-```
+```python
 class Foo:
     f = '类的静态变量'
     def __init__(self,name,age):
@@ -58,7 +54,7 @@ print(obj.__dict__)
 
 ### 1.2 对类的反射
 
-```
+```python
 class Foo(object):
  
     staticField = "old boy"
@@ -80,7 +76,7 @@ print getattr(Foo, 'bar')
 
 ### 1.3 当前模块的反射
 
-```
+```python
 import sys
 
 
@@ -100,7 +96,7 @@ getattr(this_module, 's2')
 
 ### 1.4 其他模块的反射
 
-```
+```python
 #一个模块中的代码
 def test():
     print('from the test')
@@ -131,7 +127,7 @@ getattr(obj,'test')()
 
 没学反射之前的解决方式
 
-```
+```python
 class User:
     def login(self):
         print('欢迎来到登录页面')
@@ -160,7 +156,7 @@ while 1:
 
 学了反射之后解决方式
 
-```
+```python
 class User:
     def login(self):
         print('欢迎来到登录页面')
@@ -191,7 +187,7 @@ while 1:
 
 ### 3.1 \__len__
 
-```
+```python
 class B:
     def __len__(self):
         print(666)
@@ -212,7 +208,7 @@ print(len(a))
 
 ### 3.2 \__hash__
 
-```
+```python
 class A:
     def __init__(self):
         self.a = 1
@@ -228,7 +224,7 @@ print(hash(a))
 
 如果一个类中定义了__str__方法，那么在打印 对象 时，默认输出该方法的返回值。
 
-```
+```python
 class A:
     def __init__(self):
         pass
@@ -243,7 +239,7 @@ print('%s' % a)
 
 如果一个类中定义了__repr__方法，那么在repr(对象) 时，默认输出该方法的返回值。
 
-```
+```python
 class A:
     def __init__(self):
         pass
@@ -260,7 +256,7 @@ print('%r'%a)
 
 注：构造方法__new__的执行是由创建对象触发的，即：对象 = 类名() ；而对于 __call__ 方法的执行是由对象后加括号触发的，即：对象() 或者 类()()
 
-```
+```python
 class Foo:
 
     def __init__(self):
@@ -277,7 +273,7 @@ obj()       # 执行 __call__
 
 ### 3.6 \__eq__
 
-```
+```python
 class A:
     def __init__(self):
         self.a = 1
@@ -299,7 +295,7 @@ print(a == b)
 
 ### 3.8 \__new__
 
-```
+```python
 class A:
     def __init__(self):
         self.x = 1
@@ -314,7 +310,7 @@ print(a.x)
 
 使用__new__实现单例模式
 
-```
+```python
 class A:
     __instance = None
     def __new__(cls, *args, **kwargs):
@@ -348,7 +344,7 @@ class A:
 
 ### 3.9 \__item__系列
 
-```
+```python
 class Foo:
     def __init__(self,name):
         self.name=name

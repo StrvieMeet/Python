@@ -24,7 +24,7 @@ import json
 
 #### 1.1.1 dump
 
-![](C:\Users\by\Desktop\大纲\assets\1-1548477108500.gif)
+![](\assets\1-1548477108500.gif)
 
 这是将咱们写的字典存储到文件中,在文件中存储的是字符串类型
 
@@ -32,7 +32,7 @@ json.dump(第一个参数是要转换的数据类型,第二个参数是一个文
 
 #### 1.1.2 load
 
-![](C:\Users\by\Desktop\大纲\assets\1-1548477214910.gif)
+![](\assets\1-1548477214910.gif)
 
 这是将文件中的字符串转成python中的数据类型,并且还能正常使用
 
@@ -40,7 +40,7 @@ json.load(这里放一个文件句柄,就要用从那个文件中读取内容)
 
 #### 1.1.3 dumps
 
-![](C:\Users\by\Desktop\大纲\assets\1-1548477526721.gif)
+![](assets\1-1548477526721.gif)
 
 dumps是将python中的数据类型转成字符串
 
@@ -48,13 +48,13 @@ dumps(参数是要转换的数据类型)
 
 #### 1.1.4 loads
 
-![](C:\Users\by\Desktop\大纲\assets\1-1548477722781.gif)
+![](assets\1-1548477722781.gif)
 
 loads是将python的数据类型转换成字符串的内容在转换成之前的数据类型
 
 loads(要转换成原数据类型的字符串)
 
-![](C:\Users\by\Desktop\大纲\assets\1-1548478009986.gif)
+![](assets\1-1548478009986.gif)
 
 需要注意的一点,咱们的字典中键和值必须用**双引号**
 
