@@ -1,6 +1,6 @@
 ### 一. collections模块
 
-在内置数据类型（dict、list、set、tuple）的基础上，collections模块还提供了几个额外的数据类型：Counter、deque、defaultdict、namedtuple和OrderedDict等。
+在内置数据类型（dict、list、set、tuple）的基础上，collections模块还提供了几个额外的数据类型：Counter、deque、defaultdict、namedtuple和OrderedDict以及判断什么是可迭代对象什么是迭代器
 
 1.namedtuple: 生成可以使用名字来访问元素内容的tuple
 
@@ -140,4 +140,18 @@ c = Counter('abcdeabcdabcaba')
 print c
 输出：Counter({'a': 5, 'b': 4, 'c': 3, 'd': 2, 'e': 1})
 ```
+
+#### isinstance
+
+判断当前数据类型,返回的是一个布尔值
+
+```python
+from collections import Iterable,Iterator
+lst = [1,2,3,4]
+print(isinstance(lst,list))   # 判断lst是不是列表类型 返回的是True
+print(isinstance(lst,Iterator)) # 判断lst是不是迭代器 返回的是False
+print(isinstance(lst,Iterable)) # 判断lst是不是可迭代对象 返回的是True
+```
+
+
 

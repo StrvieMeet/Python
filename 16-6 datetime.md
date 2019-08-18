@@ -12,7 +12,7 @@ print(datetime.now())
 '''
 ```
 
-​    **4.7.2 获取指定日期和时间**
+####     **4.7.2 获取指定日期和时间**
 
 要指定某个日期和时间，我们直接用参数构造一个`datetime`：
 
@@ -27,7 +27,7 @@ print(dt)
 '''
 ```
 
-​    **4.7.3 datetime与时间戳的转换**
+####     **4.7.3 datetime与时间戳的转换**
 
 ```python
 from datetime import datetime
@@ -72,7 +72,7 @@ Mon, May 05 16:28
 
 ~~~
 
-###     **4.7.5 datetime加减**
+####     **4.7.5 datetime加减**
 
 对日期和时间进行加减实际上就是把datetime往后或往前计算，得到新的datetime。加减可以直接用`+`和`-`运算符，不过需要导入`timedelta`这个类：
 
